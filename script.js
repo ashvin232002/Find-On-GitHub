@@ -2,12 +2,15 @@
 const searchbar = document.querySelector(".searchbar-container");
 const profilecontainer = document.querySelector(".profile-container");
 const root = document.documentElement.style;
+
 const get = (param) => document.getElementById(`${param}`);
 const url = "https://api.github.com/users/";
 const noresults = get("no-results");
-const btnmode = get("btn-mode");
+const btnmode = get("btn-mode");  //btn mode is bassically used to change the mode like dart->light , light->dark
+const modeicon = get("mode-icon"); // it represent the current mode icon weather light or dark
+
 const modetext = get("mode-text");
-const modeicon = get("mode-icon");
+
 const btnsubmit = get("submit");
 const input = get("input");
 const avatar = get("avatar");
@@ -24,6 +27,8 @@ const page = get("page");
 const twitter = get("twitter");
 const company = get("company");
 let darkMode = false;
+
+
 
 // Event Listeners
 btnsubmit.addEventListener("click", function () {
@@ -48,13 +53,6 @@ input.addEventListener("input", function () {
   noresults.style.display = "none";
 });
 
-btnmode.addEventListener("click", function () {
-  if (darkMode == false) {
-    darkModeProperties();
-  } else {
-    lightModeProperties();
-  }
-});
 
 // Functions
 
@@ -109,6 +107,15 @@ function updateProfile(data) {
 }
 
 
+btnmode.addEventListener("click", function () {
+  if (darkMode == false) {
+    darkModeProperties();
+  } else {
+    lightModeProperties();
+  }
+});
+
+
 
 //SWITCH TO DARK MODE - activateDarkMode()
 function darkModeProperties() {
@@ -150,14 +157,17 @@ function lightModeProperties() {
 function init() {
   //initialise dark-mode variable to false;
   //darkMode = true -> dark mode enable karna h 
-  //darMode = false -> light mode enable karna h 
+  //darMode = false -> light mode enable karna h (dark mode disable karna h)
   darkMode = false;
 
   //HW
-// const prefersDarkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+ const prefersDarkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
 
   const value = localStorage.getItem("dark-mode");
 
+  //checking for the loalStorage if it is darkmode(true) enable dark mode 
+  // localStorage if it darkmode(false) disable dark mode
+  //localstorage empty not any values set what is suitable to you.
   if(value === null) {
     console.log("null k andar");
     localStorage.setItem("dark-mode", darkMode);
@@ -174,7 +184,7 @@ function init() {
 
 
   //by default, pranaygupta ki info show krre h UI pr
-  getUserData(url + "thepranaygupta");
+  getUserData(url + "ashvin232002");
 }
 
 init();
